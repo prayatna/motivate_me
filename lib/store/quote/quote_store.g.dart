@@ -24,19 +24,20 @@ mixin _$QuoteStore on _QuoteStore, Store {
     });
   }
 
-  final _$quoteOfTheDayFutureAtom =
-      Atom(name: '_QuoteStore.quoteOfTheDayFuture');
+  final _$_quoteOfTheDayFutureAtom =
+      Atom(name: '_QuoteStore._quoteOfTheDayFuture');
 
   @override
-  ObservableFuture<QuoteOfTheDay> get quoteOfTheDayFuture {
-    _$quoteOfTheDayFutureAtom.reportRead();
-    return super.quoteOfTheDayFuture;
+  ObservableFuture<QuoteOfTheDayVm> get _quoteOfTheDayFuture {
+    _$_quoteOfTheDayFutureAtom.reportRead();
+    return super._quoteOfTheDayFuture;
   }
 
   @override
-  set quoteOfTheDayFuture(ObservableFuture<QuoteOfTheDay> value) {
-    _$quoteOfTheDayFutureAtom.reportWrite(value, super.quoteOfTheDayFuture, () {
-      super.quoteOfTheDayFuture = value;
+  set _quoteOfTheDayFuture(ObservableFuture<QuoteOfTheDayVm> value) {
+    _$_quoteOfTheDayFutureAtom.reportWrite(value, super._quoteOfTheDayFuture,
+        () {
+      super._quoteOfTheDayFuture = value;
     });
   }
 
@@ -83,7 +84,6 @@ mixin _$QuoteStore on _QuoteStore, Store {
   String toString() {
     return '''
 quoteOfTheDay: ${quoteOfTheDay},
-quoteOfTheDayFuture: ${quoteOfTheDayFuture},
 author: ${author}
     ''';
   }
