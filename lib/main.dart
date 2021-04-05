@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:motivate_me/quote/quote_widget.dart';
 import 'package:motivate_me/store/quote/quote_store.dart';
 
 import 'injectable.dart';
 
-final quoteStore = QuoteStore();
+QuoteStore get quoteStore => getIt<QuoteStore>();
 
 void main() {
   configureDependencies();
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     quoteStore.updateQuoteOfTheDay();
-    quoteStore.updateAuthor();
+    quoteStore.getNewQuoteOfTheDay().then((value) => print('inside main.dart'));
 
     return ScreenUtilInit(
       designSize: Size(360, 690),
@@ -28,11 +29,15 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: Scaffold(
-            body: QuoteWidget(
-          quote: quoteStore.quoteOfTheDay,
-          author: quoteStore.author,
-          backgroundColor: Colors.redAccent,
-        )),
+          body: Container(
+              child: Observer(
+            builder: (_) => QuoteWidget(
+              quote: quoteStore.quoteOfTheDay,
+              author: quoteStore.author,
+              backgroundColor: Colors.redAccent,
+            ),
+          )),
+        ),
       ),
     );
   }
