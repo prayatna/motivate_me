@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             builder: (_) => QuoteWidget(
               quote: quoteStore.quoteOfTheDay,
               author: quoteStore.author,
-              backgroundColor: Colors.redAccent,
+              backgroundColor: Colors.lightBlueAccent,
             ),
           )),
         ),
