@@ -56,6 +56,15 @@ mixin _$QuoteStore on _QuoteStore, Store {
     });
   }
 
+  final _$getNewQuoteOfTheDayAsyncAction =
+      AsyncAction('_QuoteStore.getNewQuoteOfTheDay');
+
+  @override
+  Future<void> getNewQuoteOfTheDay() {
+    return _$getNewQuoteOfTheDayAsyncAction
+        .run(() => super.getNewQuoteOfTheDay());
+  }
+
   final _$_QuoteStoreActionController = ActionController(name: '_QuoteStore');
 
   @override

@@ -30,6 +30,7 @@ abstract class _QuoteStore with Store {
   @observable
   String author = 'Anon';
 
+  @action
   Future<void> getNewQuoteOfTheDay() async {
     try {
       final a = await _quoteService.fetchQuoteOfTheDay();
