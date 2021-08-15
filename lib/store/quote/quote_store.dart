@@ -21,34 +21,20 @@ abstract class _QuoteStore with Store {
   _QuoteStore(this._quoteService);
 
   @observable
-  String quoteOfTheDay = '';
-
-  @observable
-  ObservableFuture<QuoteOfTheDayVm> _quoteOfTheDayFuture =
+  ObservableFuture<QuoteOfTheDayVm> quoteOfTheDayFuture =
       ObservableFuture.value(new QuoteOfTheDayVm());
 
-  @observable
-  String author = 'Anon';
+  @computed
+  bool get isLoading => quoteOfTheDayFuture.status == FutureStatus.pending;
 
   @action
   Future<void> getNewQuoteOfTheDay() async {
     try {
-      final a = await _quoteService.fetchQuoteOfTheDay();
-      print(a.author);
-      author = a.author!;
-      quoteOfTheDay = a.quote!;
+      quoteOfTheDayFuture =
+          ObservableFuture.value(await _quoteService.fetchQuoteOfTheDay());
+      //TODO: save to cache with time so that we do not hammer the quote api
     } catch (e) {
       print(e);
     }
-  }
-
-  @action
-  void updateQuoteOfTheDay() {
-    quoteOfTheDay = 'I never dream about success, I work for it';
-  }
-
-  @action
-  void updateAuthor() {
-    author = 'Este Lauder';
   }
 }

@@ -17,14 +17,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    quoteStore.updateQuoteOfTheDay();
+    // quoteStore.updateQuoteOfTheDay();
     quoteStore.getNewQuoteOfTheDay().then((value) => print('inside main.dart'));
+    if (quoteStore.isLoading) {
+      return CircularProgressIndicator();
+    }
 
     return ScreenUtilInit(
       designSize: Size(360, 690),
       allowFontScaling: true,
       builder: () => MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Motivate Me',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -32,9 +35,11 @@ class MyApp extends StatelessWidget {
           body: Container(
               child: Observer(
             builder: (_) => QuoteWidget(
-              quote: quoteStore.quoteOfTheDay,
-              author: quoteStore.author,
+              quote: quoteStore.quoteOfTheDayFuture.value?.quote,
+              author: quoteStore.quoteOfTheDayFuture.value?.author,
               backgroundColor: Colors.lightBlueAccent,
+              backgroundImageUrl:
+                  quoteStore.quoteOfTheDayFuture.value?.backgroundImage,
             ),
           )),
         ),
