@@ -5,34 +5,35 @@ import 'package:motivate_me/constants/assets.dart';
 
 class QuoteWidget extends StatelessWidget {
   final Color backgroundColor;
-  final String quote, author;
+  final String? quote, author, backgroundImageUrl;
 
-  const QuoteWidget(
-      {Key? key,
-      this.backgroundColor = Colors.lightBlueAccent,
-      this.quote = 'You only live once',
-      this.author = 'Anon'})
-      : super(key: key);
+  QuoteWidget({
+    Key? key,
+    this.backgroundColor = Colors.lightBlueAccent,
+    this.quote,
+    this.author,
+    this.backgroundImageUrl,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
         width: ScreenUtil().screenWidth,
-        color: backgroundColor,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: Image.network(
-                 
-                  fit: BoxFit.fitHeight,
-                  alignment: Alignment.centerLeft,
-                )
-          ),
-        ),
+        color: backgroundImageUrl == null ? backgroundColor : null,
+        decoration: backgroundImageUrl != null
+            ? BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(
+                  backgroundImageUrl!,
+                  //fit: BoxFit.fitHeight,
+                  // alignment: Alignment.centerLeft,
+                )),
+              )
+            : null,
         padding: EdgeInsets.symmetric(
           horizontal: ScreenUtil().setWidth(16),
           vertical: ScreenUtil().setHeight(48),
         ),
-        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -45,7 +46,9 @@ class QuoteWidget extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Text(
-                  quote,
+                  quote != null
+                      ? quote!
+                      : 'I never dream about success, I work for it',
                   style: ThemeText.header,
                 ),
               ),
@@ -58,7 +61,7 @@ class QuoteWidget extends StatelessWidget {
             ),
             Center(
               child: Text(
-                author,
+                author != null ? author! : 'Este Lauder',
                 style: ThemeText.subHeader,
               ),
             ),
